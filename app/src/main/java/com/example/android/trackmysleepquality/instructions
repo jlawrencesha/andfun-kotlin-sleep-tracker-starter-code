@@ -1,0 +1,55 @@
+kata_nine_instructions
+
+Add Dao annotation to sleepDatabaseDao.
+
+Create insert and update functions in the dao and add the correct annotations.
+
+Write a query statement which gets all rows from the table for a given nightId.
+@Query("SELECT * FROM daily_sleep_quality_table WHERE nightId = :key")
+
+
+[
+	Next we will add delete queries.  Athough the following is not implented here.  I am recording the following as it may be useful
+	in supervisor genie.  More specifically when deleting according to checkboxes.
+
+	@Delete
+	fun deleteAllNights(nights: List<SleepNight>): Int
+]
+
+Write a delete function which deletes everything and annotate properly.
+
+Write a function which returns all nights.
+
+Add a function which returns the most recent night.
+
+
+
+
+
+cheat sheet below:
+
+
+
+
+
+
+
+
+
+    @Insert
+    fun insert(night: SleepNight)
+
+    @Update
+    fun update(night: SleepNight)
+
+    @Query("SELECT * from daily_sleep_quality_table WHERE nightId = :key")
+    fun get(key: Long) : SleepNight
+
+    @Query("DELETE FROM daily_sleep_quality_table")
+    fun clear()
+
+    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC")
+    fun getAllNights():LiveData<List<SleepNight>>
+
+    @Query("SELECT * FROM daily_sleep_quality_table ORDER BY nightId DESC LIMIT 1")
+    fun getTonight():SleepNight?
