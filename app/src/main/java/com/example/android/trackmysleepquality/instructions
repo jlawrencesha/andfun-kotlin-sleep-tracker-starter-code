@@ -1,0 +1,7 @@
+kata_eight instructions:
+
+Make the data class SleepNight into a database Entity.
+Create a tablename.
+Make nightId the primary key.
+Set autogenerate to true.(this is the reason for using the type long variables above.)
+Next add ColumnInfo annotations with column names.
