@@ -1,0 +1,104 @@
+kata_ten Instructions
+
+Create an abstract database class which extends RoomDatabase.
+Add the annotation.  Include the entities, version number, and whether or not to export schema.
+(Entities are all the tables in the database. The export schema will make a copy of the schema in a seperate file.)
+
+create an abstract instance of a dao that extends the dao created in kata_nine.
+
+now create a companion object.
+
+
+create a private, nullable INSTANCE of the sleepDatabase.  Annotate with @Volatile.  (this makes changes to this instance immediately available everywhere.)
+
+write a getInstance function which returns a SleepDataBase object.
+
+Create a synchronized block.  (This block can only be entered one at a time. If two threads enter a block of code at the same time, we could get
+multiple databases.)
+
+
+create an instance variable of INSTANCE
+
+
+now return instance.
+
+
+Now create and if statement which tests if instance ==null.
+
+(after this if block is where we would normally add a migration object. instead we add the following)
+
+.fallbackToDestructiveMigration
+
+add the build the function.
+
+make INSTANCE = instance
+
+
+
+
+
+cheat:
+
+
+
+
+
+
+
+
+
+
+@Database(entities= [SleepNight::class], version = 1, exportSchema = false)
+abstract class SleepDatabase: RoomDatabase(){
+    companion object{
+
+        @Volatile
+        private var INSTANCE: SleepDatabase? = null
+        fun getInstance(context: Context): SleepDatabase{
+            synchronized(this){
+                var instance = INSTANCE
+
+                if(instance==null){
+                    instance = Room.databaseBuilder(
+                            context.applicationContext,
+                            SleepDatabase::class.java,
+                            "sleep_history_database"
+                    )
+                            .fallbackToDestructiveMigration()
+                            .build()
+                    INSTANCE = instance
+                }
+                return instance
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
