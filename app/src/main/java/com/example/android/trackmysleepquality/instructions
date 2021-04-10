@@ -1,1 +1,70 @@
 kata_eleven instructions
+
+
+
+create the class SleepTrackerViewModel  and extend AndroidViewModel.
+
+(The AndroidViewModel differs from regular viewModel in that takes Application as a parameter.)
+
+
+	[Add to database creation kata the following instruction:
+	Add this code after the opening curly brace of the SleepDataBase class
+	abstract val sleepDatabaseDao: SleepDatabaseDoa
+	]
+
+pass in the application
+and the datasource
+
+now create an instance of the viewModelFactory and pass in the application and datasource from above.
+
+next create a sleepTrackerViewModel using ViewModelProvider - pass in context, and viewModelFactory as parameters.  then use the get function
+
+add
+
+binding.setLifeCyclerOwner(this)
+
+next go to the fragment_sleep_tracker.xml and add a variale with the name of the sleepTrackerModel and the type to the data block.
+
+now
+go back to the sleeptrackerFragment class and using binding to add this variable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+cheat:
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+
+        // Get a reference to the binding object and inflate the fragment views.
+        val binding: FragmentSleepTrackerBinding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_sleep_tracker, container, false)
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
+
+        val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
+
+        val sleepTrackerViewModel =
+                ViewModelProvider(
+                        this, viewModelFactory).get(SleepTrackerViewModel::class.java)
+
+
+        binding.sleepTrackerViewModel = sleepTrackerViewModel
+        binding.setLifecycleOwner(this)
+
+
+
+
+        return binding.root
+    }
+}
